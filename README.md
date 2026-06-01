@@ -154,6 +154,15 @@ auto-checkin/
 └── .gitignore
 ```
 
+## 版本历史
+
+| 版本 | 发布日期 | 核心功能 | Tag |
+|------|---------|---------|-----|
+| V1.1 | 2026-06-02 | 稳定性加固：微信重连 + 会议进程守护 + 多模板支持 + 日志轮转 | [v1.1](https://github.com/tianzhiceng297-boop/auto-checkin/tree/v1.1) |
+| V1.0 | 2026-06-01 | 基础功能：群监控 + 解析 + 定时入会 + pywinauto签到 + 微信通知 | [v1.0](https://github.com/tianzhiceng297-boop/auto-checkin/tree/v1.0) |
+
+> 💡 如需回退到旧版本：`git checkout v1.0`
+
 ## 注意事项
 
 - 微信窗口必须保持打开（可最小化），且目标群聊至少打开过一次
