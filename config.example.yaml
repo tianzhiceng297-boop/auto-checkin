@@ -1,0 +1,32 @@
+# 配置文件示例 - 复制为 config.yaml 并填入你的信息
+student_id: "2024312250"          # 你的学号
+name: "曾天智"                    # 你的姓名
+checkin_text: "2024312250曾天智"  # 签到时输入的文本（学号+姓名）
+
+# 微信群名（wxauto 使用，必须和你微信里看到的群名一致）
+wechat_group: "你的辅修学习群名"
+
+# 监控设置
+monitor:
+  poll_interval: 5               # 轮询微信群消息的间隔（秒）
+  lookback_minutes: 1440          # 每次检查多少分钟内的历史消息（1440=24小时）
+
+# 入会设置
+meeting:
+  join_advance_minutes: 8         # 提前多少分钟入会
+  auto_mute: true                 # 入会后自动静音
+  auto_close_camera: true         # 入会后自动关闭摄像头
+
+# 签到设置
+checkin:
+  window_before_minutes: 5        # 会议开始前几分钟开始检测签到
+  window_after_minutes: 5         # 会议开始后几分钟停止检测
+  check_interval: 1               # 每隔多少秒检测一次签到弹窗
+  template_threshold: 0.8         # OpenCV 模板匹配置信度阈值（0-1）
+  auto_leave_after_checkin: true # 签到成功后自动离开会议
+
+# 通知设置
+notify:
+  on_success: true                # 签到成功时通知
+  on_failure: true                # 签到失败时通知
+  notify_target: "文件传输助手"     # 通知发送到微信哪里

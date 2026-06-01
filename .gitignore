@@ -1,0 +1,10 @@
+# 工作区相关文件不要提交
+.workbuddy/
+__pycache__/
+*.pyc
+*.log
+logs/
+# 配置文件包含个人信息，不提交
+config.yaml
+# 签到弹窗截图模板（用户自己提供）
+assets/checkin_popup.png
