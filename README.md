@@ -1,5 +1,9 @@
 # 腾讯会议自动签到 (Auto Check-in)
 
+![GitHub](https://img.shields.io/badge/license-MIT-green)
+![GitHub stars](https://img.shields.io/github/stars/tianzhiceng297-boop/auto-checkin)
+[![GitHub](https://img.shields.io/badge/View%20on%20GitHub-black?logo=github)](https://github.com/tianzhiceng297-boop/auto-checkin)
+
 自动监控微信群中的腾讯会议通知 → 定时入会 → 签到 → 自动离开。
 
 ## 功能
