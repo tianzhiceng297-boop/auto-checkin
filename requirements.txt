@@ -5,4 +5,5 @@ opencv-python>=4.8.0
 numpy>=1.24.0
 PyYAML>=6.0
 APScheduler>=3.10.0
+psutil>=5.9.0  # 进程检测与守护
 pytesseract>=0.3.10  # OCR 后备方案（可选，需先安装 Tesseract-OCR）

@@ -15,14 +15,14 @@ import sys
 import signal
 import time
 import logging
-import yaml
+from logging.handlers import RotatingFileHandler
 from datetime import datetime
 
 from monitor import WeChatMonitor
 from parser import parse_message, is_meeting_notification, MeetingInfo
 from scheduler import MeetingScheduler
 from meeting import MeetingJoiner
-from checkin import CheckinDetector
+from checkin import run_checkin, leave_meeting
 from notifier import Notifier
 
 
@@ -34,19 +34,59 @@ def load_config(path: str = "config.yaml") -> dict:
 
 
 def setup_logging():
-    """配置日志"""
+    """配置日志（支持轮转，避免日志文件过大）"""
     os.makedirs("logs", exist_ok=True)
     log_file = os.path.join("logs", f"auto_checkin_{datetime.now().strftime('%Y%m%d')}.log")
-
+    
+    # 创建 RotatingFileHandler，最大 10MB，保留 5 个备份
+    file_handler = RotatingFileHandler(
+        log_file,
+        maxBytes=10 * 1024 * 1024,  # 10MB
+        backupCount=5,
+        encoding="utf-8"
+    )
+    file_handler.setLevel(logging.INFO)
+    file_formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+    file_handler.setFormatter(file_formatter)
+    
+    # 控制台 Handler
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    console_formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
+    console_handler.setFormatter(console_formatter)
+    
+    # 配置 root logger
     logging.basicConfig(
         level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-        handlers=[
-            logging.StreamHandler(),
-            logging.FileHandler(log_file, encoding="utf-8"),
-        ],
+        handlers=[console_handler, file_handler]
     )
+    
+    # 清理旧日志（保留最近 7 天的日志文件）
+    _cleanup_old_logs(days=7)
+    
     return logging.getLogger(__name__)
+
+
+def _cleanup_old_logs(days: int = 7):
+    """清理超过指定天数的旧日志文件"""
+    try:
+        import time
+        logs_dir = "logs"
+        if not os.path.exists(logs_dir):
+            return
+        
+        current_time = time.time()
+        for filename in os.listdir(logs_dir):
+            filepath = os.path.join(logs_dir, filename)
+            if os.path.isfile(filepath) and filename.endswith(".log"):
+                file_mtime = os.path.getmtime(filepath)
+                if (current_time - file_mtime) > (days * 24 * 60 * 60):
+                    os.remove(filepath)
+                    logger = logging.getLogger(__name__)
+                    logger.info(f"已清理旧日志: {filename}")
+    except Exception as e:
+        logger = logging.getLogger(__name__)
+        logger.warning(f"清理旧日志失败: {e}")
 
 
 class AutoCheckin:
