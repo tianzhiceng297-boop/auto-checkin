@@ -1,5 +1,5 @@
 """
-微信群消息监控模块 (wxauto)
+微信群消息监控模块 (wxauto4)
 
 通过 Windows UI Automation 读取微信群消息。
 微信窗口可最小化，但必须已打开过目标群聊。
@@ -29,12 +29,12 @@ class WeChatMonitor:
     def connect(self):
         """连接到微信客户端"""
         try:
-            from wxauto import WeChat
+            from wxauto4 import WeChat
             self._wx = WeChat()
             logger.info("成功连接到微信客户端")
             return True
         except ImportError:
-            logger.error("wxauto 未安装，请运行: pip install wxauto")
+            logger.error("wxauto4 未安装，请运行: pip install wxauto4")
             return False
         except Exception as e:
             logger.error(f"连接微信失败: {e}")

@@ -51,7 +51,7 @@ auto-checkin/
 ├── main.py              # 主程序入口
 ├── config.yaml          # 配置文件（学号、姓名、群名等）
 ├── requirements.txt     # Python 依赖
-├── monitor.py           # 微信群消息监控 (wxauto)
+├── monitor.py           # 微信群消息监控 (wxauto4)
 ├── parser.py            # 消息解析（正则提取会议信息）
 ├── scheduler.py         # 定时调度（创建/管理入会任务）
 ├── meeting.py           # 自动入会（URI Scheme）

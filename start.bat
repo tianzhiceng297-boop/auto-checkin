@@ -7,19 +7,25 @@ echo.
 
 cd /d "%~dp0"
 
+REM 使用 Python 3.12 虚拟环境
+set PYTHON=C:\auto-checkin\venv\Scripts\python.exe
+
 REM 检查 Python
-python --version >nul 2>&1
+%PYTHON% --version >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [错误] 未找到 Python，请先安装 Python 3.10+
+    echo [错误] 未找到 Python 3.12 虚拟环境
+    echo [提示] 请运行以下命令创建环境并安装依赖:
+    echo   C:\Python312\python.exe -m venv C:\auto-checkin\venv
+    echo   C:\auto-checkin\venv\Scripts\pip.exe install -r requirements.txt
     pause
     exit /b 1
 )
 
 REM 检查依赖
-python -c "import wxauto" >nul 2>&1
+%PYTHON% -c "import wxauto4" >nul 2>&1
 if %errorlevel% neq 0 (
     echo [提示] 正在安装依赖...
-    pip install -r requirements.txt
+    C:\auto-checkin\venv\Scripts\pip.exe install -r requirements.txt
 )
 
 REM 检查配置
@@ -35,6 +41,6 @@ echo.
 echo 按 Ctrl+C 可停止程序
 echo.
 
-python main.py
+%PYTHON% main.py
 
 pause
